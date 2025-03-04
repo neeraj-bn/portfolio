@@ -34,7 +34,7 @@ export const timelineEducationData: TimelineItem[] = [
   },
   {
     id: 2,
-    title: "BCA",
+    title: "Bachelor of Computer Applications (BCA)",
     role: "Mangalore University",
     date: "2019 - 2022",
     description: "Built a strong foundation in programming, database management, and computer networking.",
