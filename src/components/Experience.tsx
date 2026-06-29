@@ -239,9 +239,17 @@ const Experience: React.FC = () => {
                     <h4 className="text-lg font-medium text-purple-600 dark:text-purple-400 mb-3">
                       {item.role}
                     </h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
-                      {item.description}
-                    </p>
+                    {item.bullets && item.bullets.length > 0 ? (
+                      <ul className="list-disc list-outside pl-4 text-gray-600 dark:text-gray-400 mb-4 space-y-1.5">
+                        {item.bullets.map((bullet, i) => (
+                          <li key={i} className="text-sm leading-relaxed">{bullet}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-600 dark:text-gray-400 mb-4">
+                        {item.description}
+                      </p>
+                    )}
                     <div className="flex flex-wrap gap-2">
                       {item.skills.map((skill, skillIndex) => (
                         <span

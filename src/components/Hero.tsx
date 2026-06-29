@@ -23,10 +23,10 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-blue-500 to-indigo-400 bg-clip-text text-transparent"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 pb-2 bg-gradient-to-r from-purple-600 via-blue-500 to-indigo-400 bg-clip-text text-transparent"
           >
             Hi, I'm {personalInfo.name} <br className="hidden md:block" />
-            Full Stack Developer
+            Software Engineer
           </motion.h1>
           
           <motion.p
@@ -35,7 +35,7 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mb-10"
           >
-            I build scalable, high-performance web applications with modern technologies. Let’s create something amazing!
+            Software Engineer with 2+ years of experience building scalable, high-performance web applications with modern technologies. Let's create something amazing!
           </motion.p>
           
           <motion.div

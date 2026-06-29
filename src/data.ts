@@ -5,6 +5,21 @@ import { ins } from 'framer-motion/client';
 
 export const timelineExperienceData: TimelineItem[] = [
   {
+    id: 0,
+    title: "Software Engineer",
+    role: "Banyan Cloud — Cloud Security SaaS",
+    date: "May 2025 – Present",
+    description: "",
+    bullets: [
+      "Collaborated with backend, UX, and product stakeholders to define API standards and align on design patterns, independently shipping production features on a React + TypeScript codebase.",
+      "Refactored and optimized @banyan-cloud/roots, an open-source NPM component library, reducing package size by 35% and improving performance across multiple projects.",
+      "Built interactive graph visualizations and drag-and-drop dashboards using React Flow, Mapbox GL JS, and react-grid-layout, with CI/CD quality gates using ESLint, Jest, and automated build checks.",
+      "Improved app performance using Vite for code-splitting and fast builds, React Query for server-state caching, and Zustand for lightweight client state, reducing unnecessary re-renders and cutting redundant API calls.",
+      "Integrated Auth0 authentication flows in Python (FastAPI) including JWT validation, RBAC, and organization-level access control for cloud security APIs."
+    ],
+    skills: ["React", "TypeScript", "React Flow", "Mapbox GL JS", "React Query", "Zustand", "Vite", "FastAPI", "Auth0", "Jest", "ESLint"]
+  },
+  {
     id: 1,
     title: "Software Developer Intern",
     role: "Peerbrains Technologies",
@@ -145,7 +160,9 @@ export const skillsData: Skill[] = [
   { id: 15, name: "MySQL", icon: "devicon-mysql-plain", category: "Backend" },
   { id: 16, name: "PostgreSQL", icon: "devicon-postgresql-plain", category: "Backend" },
   { id: 17, name: "Firebase", icon: "devicon-firebase-plain", category: "Cloud" },
-  { id: 18, name: "Git", icon: "devicon-git-plain", category: "Tools" }
+  { id: 18, name: "Git", icon: "devicon-git-plain", category: "Tools" },
+  { id: 19, name: "FastAPI", icon: "devicon-fastapi-plain", category: "Backend" },
+  { id: 20, name: "Flask", icon: "devicon-flask-original", category: "Backend" }
 ];
 
 

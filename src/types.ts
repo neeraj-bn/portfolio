@@ -4,6 +4,7 @@ export interface TimelineItem {
   role: string;
   date: string;
   description: string;
+  bullets?: string[];
   skills: string[];
 }
 
