@@ -8,7 +8,7 @@ import resume from "../assets/Neeraj_Resume.pdf";
 const Hero: React.FC = () => {
     const shouldReduceMotion = useReducedMotion();
     const currentRole = timelineExperienceData[0];
-    const technologies = ["React", "TypeScript", "React Query", "Zustand"];
+    const technologies = ["React", "TypeScript", "JavaScript", "Tailwind CSS"];
 
     return (
         <section
