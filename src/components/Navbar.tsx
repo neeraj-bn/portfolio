@@ -1,168 +1,166 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Menu, X, Moon, Sun, Download } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Download, Menu, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "../context/useTheme";
 import { personalInfo } from "../data";
 import resume from "../assets/Neeraj_Resume.pdf";
 
-const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
-
-  const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
+const navLinks = [
     { name: "Experience", href: "#experience" },
-    { name: "Education", href: "#education" }, // Added Education here
-    { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#projects" },
+    { name: "Skills", href: "#skills" },
+    { name: "Education", href: "#education" },
     { name: "Contact", href: "#contact" },
 ];
 
+const Navbar: React.FC = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const { theme, toggleTheme } = useTheme();
+    const shouldReduceMotion = useReducedMotion();
 
-  return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md py-3 shadow-md"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex justify-between items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-xl font-bold text-gray-900 dark:text-white"
-          >
-            <a href="#home" className="flex items-center">
-              <span className="bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
-                {personalInfo.name}
-              </span>
-            </a>
-          </motion.div>
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 16);
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") setIsOpen(false);
+        };
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <ul className="flex space-x-6">
-              {navLinks.map((link) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.1 * navLinks.indexOf(link),
-                  }}
-                >
-                  <a
-                    href={link.href}
-                    className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </motion.li>
-              ))}
-            </ul>
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="flex items-center space-x-4"
+    const closeMenu = () => setIsOpen(false);
+
+    return (
+        <header className="fixed inset-x-0 top-0 z-50">
+            <nav
+                aria-label="Main navigation"
+                className={`border-b transition-colors duration-200 ${
+                    scrolled || isOpen
+                        ? "border-gray-200/80 bg-white/95 shadow-sm backdrop-blur-md dark:border-gray-800/80 dark:bg-gray-950/95"
+                        : "border-transparent bg-white/80 backdrop-blur-sm dark:bg-gray-950/75"
+                }`}
             >
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                aria-label="Toggle theme"
-              >
-                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
+                <div className="mx-auto flex min-h-[4.25rem] max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                    <a
+                        href="#home"
+                        onClick={closeMenu}
+                        className="rounded-sm text-lg font-semibold tracking-tight text-gray-950 dark:text-white"
+                    >
+                        {personalInfo.name}
+                        <span className="text-accent-600 dark:text-accent-400">.</span>
+                    </a>
 
-              <a
-                href={resume}
-                download="Neeraj_Resume.pdf"
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors"
-              >
-                <Download size={16} />
-                <span>Resume</span>
-              </a>
-            </motion.div>
-          </div>
+                    <div className="hidden items-center gap-7 md:flex">
+                        <ul className="flex items-center gap-6">
+                            {navLinks.map((link) => (
+                                <li key={link.href}>
+                                    <a
+                                        href={link.href}
+                                        className="text-sm font-medium text-gray-600 transition-colors hover:text-accent-700 dark:text-gray-300 dark:hover:text-accent-300"
+                                    >
+                                        {link.name}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                        <a
+                            href={resume}
+                            download="Neeraj_Resume.pdf"
+                            className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-accent-700 px-4 text-sm font-semibold text-white transition-colors hover:bg-accent-800 dark:bg-accent-500 dark:text-gray-950 dark:hover:bg-accent-400"
+                        >
+                            <Download aria-hidden="true" size={16} />
+                            Resume
+                        </a>
+                        <button
+                            type="button"
+                            onClick={toggleTheme}
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+                            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+                        >
+                            {theme === "dark" ? (
+                                <Sun aria-hidden="true" size={18} />
+                            ) : (
+                                <Moon aria-hidden="true" size={18} />
+                            )}
+                        </button>
+                    </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-4">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+                    <div className="flex items-center gap-2 md:hidden">
+                        <button
+                            type="button"
+                            onClick={toggleTheme}
+                            className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+                        >
+                            {theme === "dark" ? (
+                                <Sun aria-hidden="true" size={19} />
+                            ) : (
+                                <Moon aria-hidden="true" size={19} />
+                            )}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setIsOpen((open) => !open)}
+                            className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
+                            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+                            aria-expanded={isOpen}
+                            aria-controls="mobile-navigation"
+                        >
+                            {isOpen ? (
+                                <X aria-hidden="true" size={21} />
+                            ) : (
+                                <Menu aria-hidden="true" size={21} />
+                            )}
+                        </button>
+                    </div>
+                </div>
 
-            <button
-              onClick={toggleMenu}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-300"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{
-          opacity: isOpen ? 1 : 0,
-          height: isOpen ? "auto" : 0,
-        }}
-        transition={{ duration: 0.3 }}
-        className="md:hidden overflow-hidden bg-white dark:bg-gray-900"
-      >
-        <div className="container mx-auto px-4 py-4">
-          <ul className="space-y-4">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a
-                  href={link.href}
-                  className="block py-2 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
-                  onClick={toggleMenu}
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href={resume}
-                download="Neeraj_Resume.pdf"
-                className="flex items-center gap-2 py-2 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
-                onClick={toggleMenu}
-              >
-                <Download size={16} />
-                <span>Download Resume</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </motion.div>
-    </nav>
-  );
+                <AnimatePresence initial={false}>
+                    {isOpen && (
+                        <motion.div
+                            id="mobile-navigation"
+                            initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
+                            transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+                            className="overflow-hidden border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 md:hidden"
+                        >
+                            <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-1 px-4 py-3 sm:px-6">
+                                {navLinks.map((link) => (
+                                    <li key={link.href}>
+                                        <a
+                                            href={link.href}
+                                            onClick={closeMenu}
+                                            className="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-accent-700 dark:text-gray-200 dark:hover:bg-gray-900 dark:hover:text-accent-300"
+                                        >
+                                            {link.name}
+                                        </a>
+                                    </li>
+                                ))}
+                                <li className="col-span-2 pt-1">
+                                    <a
+                                        href={resume}
+                                        download="Neeraj_Resume.pdf"
+                                        onClick={closeMenu}
+                                        className="flex min-h-11 items-center justify-center gap-2 rounded-lg bg-accent-700 px-4 text-sm font-semibold text-white dark:bg-accent-500 dark:text-gray-950"
+                                    >
+                                        <Download aria-hidden="true" size={16} />
+                                        Download résumé
+                                    </a>
+                                </li>
+                            </ul>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </nav>
+        </header>
+    );
 };
 
 export default Navbar;

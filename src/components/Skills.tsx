@@ -1,126 +1,96 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Braces, Cloud, Database, PanelsTopLeft, Wrench } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { skillsData } from "../data";
-import * as LucideIcons from "lucide-react";
+
+const categoryIcons: Record<string, LucideIcon> = {
+    Languages: Braces,
+    Frontend: PanelsTopLeft,
+    Backend: Database,
+    Cloud: Cloud,
+    Tools: Wrench,
+};
 
 const Skills: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+    const shouldReduceMotion = useReducedMotion();
+    const categories = Array.from(new Set(skillsData.map((skill) => skill.category)));
 
-  // Get unique categories
-  const categories = Array.from(
-    new Set(skillsData.map((skill) => skill.category))
-  );
-
-  // Filter skills by category
-  const filteredSkills = activeCategory
-    ? skillsData.filter((skill) => skill.category === activeCategory)
-    : skillsData;
-
-  // Function to dynamically get Lucide icons
-  // const getIcon = (iconName: string) => {
-  //   const Icon = (LucideIcons as any)[iconName.charAt(0).toUpperCase() + iconName.slice(1)];
-  //   return Icon ? <Icon size={24} /> : null;
-  // };
-
-  const getIcon = (iconClass: string) => (
-    <i
-      className={`${iconClass} text-4xl text-purple-600 dark:text-purple-400`}
-    ></i>
-  );
-
-  return (
-    <section id="skills" className="py-20 px-4 md:px-6">
-      <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+    return (
+        <section
+            id="skills"
+            aria-labelledby="skills-title"
+            className="bg-gray-50 px-4 py-20 dark:bg-gray-900/50 sm:px-6 lg:px-8 lg:py-24"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-            Skills
-          </h2>
-          <div className="w-20 h-1 bg-purple-600 mx-auto mb-6"></div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Technologies and tools I work with.
-          </p>
-        </motion.div>
+            <div className="mx-auto max-w-6xl">
+                <motion.header
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: shouldReduceMotion ? 0 : 0.35 }}
+                    className="mb-12 max-w-2xl"
+                >
+                    <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent-700 dark:text-accent-300">
+                        Toolkit
+                    </p>
+                    <h2
+                        id="skills-title"
+                        className="mt-3 text-3xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-4xl"
+                    >
+                        Technologies I use
+                    </h2>
+                    <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                        A practical mix of frontend, backend, and delivery tools from my project and
+                        work experience.
+                    </p>
+                </motion.header>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setActiveCategory(null)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              activeCategory === null
-                ? "bg-purple-600 text-white"
-                : "bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700"
-            }`}
-          >
-            All
-          </motion.button>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {categories.map((category, index) => {
+                        const Icon = categoryIcons[category] ?? Braces;
+                        const skills = skillsData.filter((skill) => skill.category === category);
 
-          {categories.map((category) => (
-            <motion.button
-              key={category}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCategory === category
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700"
-              }`}
-            >
-              {category}
-            </motion.button>
-          ))}
-        </div>
-
-        <motion.div
-          layout
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6"
-        >
-          {filteredSkills.map((skill, index) => (
-            <motion.div
-              key={skill.id}
-              layout
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              whileHover={{
-                y: -10,
-                boxShadow:
-                  "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-              }}
-              transition={{
-                duration: 0.3,
-                delay: index * 0.03,
-                layout: { type: "spring", stiffness: 200, damping: 20 },
-              }}
-              className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md flex flex-col items-center justify-center text-center transform transition-all duration-300"
-            >
-              {/* <div className="w-16 h-16 flex items-center justify-center mb-4 text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-                {getIcon(skill.icon)}
-              </div> */}
-              <div className="w-16 h-16 flex items-center justify-center mb-4 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-                {getIcon(skill.icon)}
-              </div>
-
-              <h3 className="text-gray-900 dark:text-white font-medium">
-                {skill.name}
-              </h3>
-              <span className="mt-2 text-xs text-purple-600 dark:text-purple-400 font-medium">
-                {skill.category}
-              </span>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
+                        return (
+                            <motion.section
+                                key={category}
+                                aria-labelledby={`skill-category-${index}`}
+                                initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.25 }}
+                                transition={{
+                                    duration: shouldReduceMotion ? 0 : 0.3,
+                                    delay: shouldReduceMotion ? 0 : index * 0.04,
+                                }}
+                                className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-950 sm:p-6"
+                            >
+                                <div className="flex items-center gap-3">
+                                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-accent-50 text-accent-700 dark:bg-accent-900/40 dark:text-accent-300">
+                                        <Icon aria-hidden="true" size={18} />
+                                    </span>
+                                    <h3
+                                        id={`skill-category-${index}`}
+                                        className="font-semibold text-gray-950 dark:text-white"
+                                    >
+                                        {category}
+                                    </h3>
+                                </div>
+                                <ul className="mt-5 flex flex-wrap gap-2">
+                                    {skills.map((skill) => (
+                                        <li
+                                            key={skill.id}
+                                            className="rounded-md border border-gray-200 px-2.5 py-1.5 text-sm text-gray-700 dark:border-gray-800 dark:text-gray-200"
+                                        >
+                                            {skill.name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.section>
+                        );
+                    })}
+                </div>
+            </div>
+        </section>
+    );
 };
 
 export default Skills;

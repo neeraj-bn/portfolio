@@ -1,205 +1,157 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { projectsData } from '../data';
-import { ExternalLink, Github, X } from 'lucide-react';
+import React from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Code2, ExternalLink, Github } from "lucide-react";
+import { personalInfo, projectsData } from "../data";
 
 const Projects: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+    const shouldReduceMotion = useReducedMotion();
 
-  const openProject = (id: number) => {
-    setSelectedProject(id);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeProject = () => {
-    setSelectedProject(null);
-    document.body.style.overflow = 'auto';
-  };
-
-  return (
-    <section id="projects" className="py-20 px-4 md:px-6 bg-gray-50 dark:bg-gray-900/50">
-      <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+    return (
+        <section
+            id="projects"
+            aria-labelledby="projects-title"
+            className="px-4 py-20 dark:bg-gray-950 sm:px-6 lg:px-8 lg:py-24"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Projects</h2>
-          <div className="w-20 h-1 bg-purple-600 mx-auto mb-6"></div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            A showcase of my recent work and projects.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projectsData.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg cursor-pointer"
-              onClick={() => openProject(project.id)}
-              whileHover={{ 
-                y: -10,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-              }}
-            >
-              <div className="relative overflow-hidden group">
-                <img 
-                  src={project.imageUrl} 
-                  alt={project.title} 
-                  className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                  <div className="p-4 w-full">
-                    <div className="flex justify-end space-x-3">
-                      {project.githubLink && (
-                        <a 
-                          href={project.githubLink} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
+            <div className="mx-auto max-w-6xl">
+                <motion.header
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: shouldReduceMotion ? 0 : 0.35 }}
+                    className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+                >
+                    <div className="max-w-2xl">
+                        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent-700 dark:text-accent-300">
+                            Selected work
+                        </p>
+                        <h2
+                            id="projects-title"
+                            className="mt-3 text-3xl font-semibold tracking-tight text-gray-950 dark:text-white sm:text-4xl"
                         >
-                          <Github size={18} className="text-white" />
-                        </a>
-                      )}
-                      {project.demoLink && (
-                        <a 
-                          href={project.demoLink} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ExternalLink size={18} className="text-white" />
-                        </a>
-                      )}
+                            Projects
+                        </h2>
+                        <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                            A selection of product work and applications. Open the details for the
+                            fuller project description.
+                        </p>
                     </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.slice(0, 3).map((tag, tagIndex) => (
-                    <span 
-                      key={tagIndex}
-                      className="px-3 py-1 text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full"
+                    <a
+                        href={personalInfo.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-10 w-fit items-center gap-2 text-sm font-semibold text-gray-700 transition-colors hover:text-accent-700 dark:text-gray-200 dark:hover:text-accent-300"
                     >
-                      {tag}
-                    </span>
-                  ))}
-                  {project.tags.length > 3 && (
-                    <span className="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-                      +{project.tags.length - 3} more
-                    </span>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                        More on GitHub <ArrowUpRight aria-hidden="true" size={16} />
+                    </a>
+                </motion.header>
 
-        {/* Project Modal */}
-        <AnimatePresence>
-          {selectedProject !== null && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
-              onClick={closeProject}
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ type: "spring", damping: 20 }}
-                className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {projectsData.find(p => p.id === selectedProject) && (
-                  <>
-                    <div className="relative">
-                      <img 
-                        src={projectsData.find(p => p.id === selectedProject)?.imageUrl} 
-                        alt={projectsData.find(p => p.id === selectedProject)?.title} 
-                        className="w-full h-64 object-cover"
-                      />
-                      <button 
-                        onClick={closeProject}
-                        className="absolute top-4 right-4 p-2 bg-black/50 rounded-full text-white hover:bg-black/70 transition-colors"
-                      >
-                        <X size={20} />
-                      </button>
-                    </div>
-                    
-                    <div className="p-6 md:p-8">
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                        {projectsData.find(p => p.id === selectedProject)?.title}
-                      </h2>
-                      
-                      <p className="text-gray-600 dark:text-gray-400 mb-6">
-                        {projectsData.find(p => p.id === selectedProject)?.longDescription || 
-                         projectsData.find(p => p.id === selectedProject)?.description}
-                      </p>
-                      
-                      <div className="mb-6">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Technologies Used</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {projectsData.find(p => p.id === selectedProject)?.tags.map((tag, index) => (
-                            <span 
-                              key={index}
-                              className="px-3 py-1 text-sm font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-4">
-                        {projectsData.find(p => p.id === selectedProject)?.demoLink && (
-                          <a 
-                            href={projectsData.find(p => p.id === selectedProject)?.demoLink} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-medium flex items-center gap-2 transition-colors"
-                          >
-                            <ExternalLink size={18} />
-                            <span>Live Demo</span>
-                          </a>
-                        )}
-                        
-                        {projectsData.find(p => p.id === selectedProject)?.githubLink && (
-                          <a 
-                            href={projectsData.find(p => p.id === selectedProject)?.githubLink} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="px-6 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium flex items-center gap-2 transition-colors"
-                          >
-                            <Github size={18} />
-                            <span>View Code</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                )}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </section>
-  );
+                <div className="grid gap-5 md:grid-cols-2">
+                    {projectsData.map((project, index) => (
+                        <motion.article
+                            key={project.id}
+                            initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.12 }}
+                            transition={{
+                                duration: shouldReduceMotion ? 0 : 0.3,
+                                delay: shouldReduceMotion ? 0 : (index % 2) * 0.06,
+                            }}
+                            className="overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-lg hover:shadow-gray-900/5 dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/20"
+                        >
+                            {project.imageUrl ? (
+                                <img
+                                    src={project.imageUrl}
+                                    alt={`${project.title} project preview`}
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="aspect-[16/8] w-full border-b border-gray-100 object-cover dark:border-gray-800"
+                                />
+                            ) : (
+                                <div
+                                    aria-hidden="true"
+                                    className="flex aspect-[16/8] items-center justify-center border-b border-gray-100 bg-gray-50 dark:border-gray-800 dark:bg-gray-950"
+                                >
+                                    <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-medium text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+                                        <Code2
+                                            aria-hidden="true"
+                                            size={18}
+                                            className="text-accent-700 dark:text-accent-300"
+                                        />
+                                        <span>Project overview</span>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="p-5 sm:p-6">
+                                <div className="flex flex-wrap items-start justify-between gap-3">
+                                    <h3 className="text-xl font-semibold tracking-tight text-gray-950 dark:text-white">
+                                        {project.title}
+                                    </h3>
+                                    <div className="flex items-center gap-1">
+                                        {project.demoLink && (
+                                            <a
+                                                href={project.demoLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label={`Open ${project.title} live demo (opens in a new tab)`}
+                                                className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-accent-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-accent-300"
+                                            >
+                                                <ExternalLink aria-hidden="true" size={17} />
+                                            </a>
+                                        )}
+                                        {project.githubLink && (
+                                            <a
+                                                href={project.githubLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label={`View ${project.title} source code (opens in a new tab)`}
+                                                className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-accent-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-accent-300"
+                                            >
+                                                <Github aria-hidden="true" size={17} />
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                                <p className="mt-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                                    {project.description}
+                                </p>
+
+                                {project.longDescription && (
+                                    <details className="group mt-4 border-t border-gray-100 pt-3 dark:border-gray-800">
+                                        <summary className="min-h-10 cursor-pointer list-none py-2 text-sm font-semibold text-accent-700 marker:hidden hover:text-accent-800 focus-visible:rounded-sm dark:text-accent-300 dark:hover:text-accent-200">
+                                            <span className="group-open:hidden">
+                                                Project details <span aria-hidden="true">+</span>
+                                            </span>
+                                            <span className="hidden group-open:inline">
+                                                Hide details <span aria-hidden="true">−</span>
+                                            </span>
+                                        </summary>
+                                        <p className="pb-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                                            {project.longDescription}
+                                        </p>
+                                    </details>
+                                )}
+
+                                <ul
+                                    aria-label={`Technologies used for ${project.title}`}
+                                    className="mt-4 flex flex-wrap gap-2"
+                                >
+                                    {project.tags.map((tag) => (
+                                        <li
+                                            key={tag}
+                                            className="rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+                                        >
+                                            {tag}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </motion.article>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
 };
 
 export default Projects;

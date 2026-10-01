@@ -14,7 +14,7 @@ export interface Project {
     description: string;
     longDescription?: string;
     tags: string[];
-    imageUrl: string;
+    imageUrl?: string;
     demoLink?: string;
     githubLink?: string;
 }

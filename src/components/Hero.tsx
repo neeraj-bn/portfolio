@@ -1,89 +1,164 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import { personalInfo } from "../data";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDown, ArrowRight, Github, Linkedin } from "lucide-react";
+import { personalInfo, timelineExperienceData } from "../data";
+import profileImage from "../assets/Neeraj-Profile.jpeg";
+import resume from "../assets/Neeraj_Resume.pdf";
 
 const Hero: React.FC = () => {
+    const shouldReduceMotion = useReducedMotion();
+    const currentRole = timelineExperienceData[0];
+    const technologies = ["React", "TypeScript", "React Query", "Zustand"];
+
     return (
         <section
             id="home"
-            className="min-h-screen flex items-center justify-center pt-16 pb-12 px-4 md:px-6"
+            aria-labelledby="hero-title"
+            className="relative overflow-hidden px-4 pb-20 pt-28 sm:px-6 sm:pt-32 lg:px-8 lg:pb-28 lg:pt-36"
         >
-            <div className="container mx-auto">
-                <div className="flex flex-col items-center text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="mb-6"
+            <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:gap-16">
+                <motion.div
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: shouldReduceMotion ? 0 : 0.45 }}
+                >
+                    <p className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-accent-700 dark:text-accent-300">
+                        <span aria-hidden="true" className="h-px w-8 bg-current" />
+                        Frontend-focused software engineer
+                    </p>
+                    <h1
+                        id="hero-title"
+                        className="max-w-3xl text-4xl font-semibold leading-[1.08] tracking-[-0.045em] text-gray-950 dark:text-white sm:text-5xl md:text-6xl lg:text-[4.25rem]"
                     >
-                        <span className="px-4 py-2 rounded-full text-sm font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">
-                            Welcome to my portfolio
+                        I build thoughtful,
+                        <br className="hidden sm:block" />
+                        <span className="text-accent-700 dark:text-accent-300">
+                            {" "}
+                            reliable web experiences.
                         </span>
-                    </motion.div>
+                    </h1>
+                    <p className="mt-6 max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-300 sm:text-lg sm:leading-8">
+                        I’m {personalInfo.name}, a Software Engineer with 2+ years of experience
+                        building responsive applications and interactive product interfaces with
+                        React and TypeScript.
+                    </p>
 
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 pb-2 bg-gradient-to-r from-purple-600 via-blue-500 to-indigo-400 bg-clip-text text-transparent"
-                    >
-                        Hi, I'm {personalInfo.name} <br className="hidden md:block" />
-                        Software Engineer
-                    </motion.h1>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
-                        className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mb-10"
-                    >
-                        Software Engineer with 2+ years of experience building scalable,
-                        high-performance web applications with modern technologies. Let's create
-                        something amazing!
-                    </motion.p>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.6 }}
-                        className="flex flex-col sm:flex-row gap-4"
-                    >
-                        <a
-                            href="#contact"
-                            className="px-8 py-3 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-medium transition-colors"
-                        >
-                            Get in Touch
-                        </a>
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                         <a
                             href="#projects"
-                            className="px-8 py-3 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-medium transition-colors"
+                            className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-accent-700 px-5 text-sm font-semibold text-white transition-colors hover:bg-accent-800 dark:bg-accent-500 dark:text-gray-950 dark:hover:bg-accent-400"
                         >
-                            View Projects
+                            View projects
+                            <ArrowRight
+                                aria-hidden="true"
+                                size={17}
+                                className="transition-transform group-hover:translate-x-0.5"
+                            />
                         </a>
-                    </motion.div>
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1, duration: 1 }}
-                    className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:block"
-                >
-                    <motion.div
-                        animate={{ y: [0, 10, 0] }}
-                        transition={{ repeat: Infinity, duration: 1.5 }}
-                    >
                         <a
-                            href="#about"
-                            className="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
+                            href={resume}
+                            download="Neeraj_Resume.pdf"
+                            className="inline-flex min-h-12 items-center justify-center rounded-lg border border-gray-300 px-5 text-sm font-semibold text-gray-800 transition-colors hover:border-gray-400 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-100 dark:hover:border-gray-600 dark:hover:bg-gray-900"
                         >
-                            <span className="text-sm mb-2">Scroll Down</span>
-                            <ArrowDown size={20} />
+                            Download résumé
                         </a>
-                    </motion.div>
+                        <a
+                            href="#contact"
+                            className="inline-flex min-h-12 items-center justify-center rounded-lg px-5 text-sm font-semibold text-gray-600 transition-colors hover:text-accent-700 dark:text-gray-300 dark:hover:text-accent-300"
+                        >
+                            Contact me
+                        </a>
+                    </div>
+
+                    <div className="mt-9 flex flex-col gap-4 border-t border-gray-200 pt-5 dark:border-gray-800 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <p className="text-xs font-medium uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">
+                                Core technologies
+                            </p>
+                            <ul
+                                className="mt-2 flex flex-wrap gap-2"
+                                aria-label="Core technologies"
+                            >
+                                {technologies.map((technology) => (
+                                    <li
+                                        key={technology}
+                                        className="rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700 dark:bg-gray-900 dark:text-gray-200"
+                                    >
+                                        {technology}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <a
+                                href={personalInfo.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub profile (opens in a new tab)"
+                                className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-700 transition-colors hover:border-accent-500 hover:text-accent-700 dark:border-gray-700 dark:text-gray-200 dark:hover:text-accent-300"
+                            >
+                                <Github aria-hidden="true" size={18} />
+                            </a>
+                            <a
+                                href={personalInfo.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn profile (opens in a new tab)"
+                                className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-700 transition-colors hover:border-accent-500 hover:text-accent-700 dark:border-gray-700 dark:text-gray-200 dark:hover:text-accent-300"
+                            >
+                                <Linkedin aria-hidden="true" size={18} />
+                            </a>
+                            <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">
+                                {personalInfo.location}
+                            </span>
+                        </div>
+                    </div>
                 </motion.div>
+
+                <motion.aside
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                        duration: shouldReduceMotion ? 0 : 0.45,
+                        delay: shouldReduceMotion ? 0 : 0.12,
+                    }}
+                    className="mx-auto w-full max-w-sm lg:max-w-none"
+                    aria-label="Profile and current role"
+                >
+                    <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-3 shadow-xl shadow-gray-900/5 dark:border-gray-800 dark:bg-gray-900 dark:shadow-black/20">
+                        <img
+                            src={profileImage}
+                            alt={`Portrait of ${personalInfo.name}`}
+                            width="1280"
+                            height="1280"
+                            fetchPriority="high"
+                            className="aspect-[4/4.2] w-full rounded-xl object-cover object-center"
+                        />
+                        <div className="p-4 sm:p-5">
+                            <p className="text-xs font-semibold uppercase tracking-[0.13em] text-accent-700 dark:text-accent-300">
+                                Currently
+                            </p>
+                            <h2 className="mt-1 text-lg font-semibold text-gray-950 dark:text-white">
+                                {currentRole.title}
+                            </h2>
+                            <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                                {currentRole.role}
+                            </p>
+                            <p className="mt-3 text-xs font-medium text-gray-500 dark:text-gray-400">
+                                {currentRole.date}
+                            </p>
+                        </div>
+                    </div>
+                </motion.aside>
             </div>
+
+            <a
+                href="#about"
+                className="mx-auto mt-12 hidden w-fit items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-accent-700 dark:text-gray-400 dark:hover:text-accent-300 sm:flex"
+            >
+                More about me
+                <ArrowDown aria-hidden="true" size={15} />
+            </a>
         </section>
     );
 };

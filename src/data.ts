@@ -1,7 +1,6 @@
-import { TimelineItem, Project, Skill } from "./types";
+import type { Project, Skill, TimelineItem } from "./types";
 import smlImage from "./assets/sml.png";
-import urlShortener from "./assets/url.png";
-import { ins } from "framer-motion/client";
+import urlShortenerImage from "./assets/url.png";
 
 export const timelineExperienceData: TimelineItem[] = [
     {
@@ -93,7 +92,6 @@ export const projectsData: Project[] = [
         tags: ["ReactJS", "Node.js", "Express", "PostgreSQL", "Bootstrap"],
         imageUrl: smlImage,
         demoLink: "https://www.syncmusiclab.com/",
-        githubLink: "#",
     },
     {
         id: 2,
@@ -106,7 +104,6 @@ export const projectsData: Project[] = [
         imageUrl:
             "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
         demoLink: "https://xpos-dev.ngxconnect.in/auth/sign-in",
-        githubLink: "#",
     },
     {
         id: 3,
@@ -117,7 +114,7 @@ export const projectsData: Project[] = [
             "ShopEase is a comprehensive ecommerce platform built with the MERN stack. It features a responsive design, user authentication, product catalog with search and filter capabilities, shopping cart functionality, secure checkout process with payment integration, order tracking, and an admin dashboard for inventory and order management. The application provides a seamless shopping experience for users and efficient management tools for administrators.",
         tags: ["React", "Node.js", "Express", "Tailwind", "ShadCN", "Redux-Store", "MongoDB"],
         imageUrl:
-            "https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZWNvbW1lcmNlfGVufDB8fDB8fHww",
+            "https://plus.unsplash.com/premium_photo-1681488262364-8aeb1b6aac56?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZW5jb21tZXJjZXx8fDB8fDB8fHww",
         demoLink: "https://mern-ecommerce-1-6sr2.onrender.com/",
         githubLink: "https://github.com/neeraj-bn/mern-ecommerce",
     },
@@ -129,73 +126,34 @@ export const projectsData: Project[] = [
         longDescription:
             "This URL Shortener project is a web application that allows users to create shortened URLs for easier sharing. Beyond basic shortening functionality, it provides detailed analytics including click counts, geographic data of visitors, referral sources, and time-based activity charts. The application features user authentication, custom URL slugs, QR code generation for shortened URLs, and an intuitive dashboard to monitor and manage all shortened links. Built with modern web technologies, it offers a responsive design that works seamlessly across all devices.",
         tags: ["React", "Supabase (PostgreSQL)", "shadcn/ui"],
-        imageUrl: urlShortener,
+        imageUrl: urlShortenerImage,
         demoLink: "https://url-shortener-rouge-alpha.vercel.app/",
         githubLink: "https://github.com/neeraj-bn/url-shortener",
     },
 ];
 
-// export const skillsData: Skill[] = [
-//   { id: 1, name: "React", icon: "react", category: "Frontend" },
-//   { id: 2, name: "TypeScript", icon: "code", category: "Languages" },
-//   { id: 3, name: "JavaScript", icon: "code-2", category: "Languages" },
-//   { id: 4, name: "HTML/CSS", icon: "code-square", category: "Frontend" },
-//   { id: 5, name: "Node.js", icon: "server", category: "Backend" },
-//   { id: 6, name: "Next.js", icon: "frame", category: "Frontend" },
-//   { id: 7, name: "Tailwind CSS", icon: "palette", category: "Frontend" },
-//   { id: 8, name: "Git", icon: "git-branch", category: "Tools" },
-//   { id: 9, name: "MongoDB", icon: "database", category: "Backend" },
-//   { id: 10, name: "Express", icon: "webhook", category: "Backend" },
-//   { id: 11, name: "Docker", icon: "container", category: "DevOps" },
-//   { id: 12, name: "AWS", icon: "cloud", category: "DevOps" },
-//   { id: 13, name: "Redux", icon: "layers", category: "Frontend" },
-//   { id: 14, name: "PostgreSQL", icon: "database", category: "Backend" },
-//   { id: 15, name: "REST API", icon: "network", category: "Backend" },
-//   { id: 16, name: "GraphQL", icon: "webhook", category: "Backend" }
-// ];
-
-// export const skillsData: Skill[] = [
-//   { id: 1, name: "C/C++", icon: "terminal", category: "Languages" },
-//   { id: 2, name: "JavaScript", icon: "code", category: "Languages" },
-//   { id: 3, name: "Python", icon: "code", category: "Languages" },
-//   { id: 4, name: "Java", icon: "file-code", category: "Languages" },
-//   { id: 5, name: "SQL", icon: "database", category: "Languages" },
-//   { id: 6, name: "HTML/CSS", icon: "brackets", category: "Frontend" },
-//   { id: 7, name: "ReactJS", icon: "react", category: "Frontend" },
-//   { id: 8, name: "Redux", icon: "layers", category: "Frontend" },
-//   { id: 9, name: "Node.js", icon: "server", category: "Backend" },
-//   { id: 10, name: "Express.js", icon: "webhook", category: "Backend" },
-//   { id: 11, name: "Tailwind CSS", icon: "palette", category: "Frontend" },
-//   { id: 12, name: "Bootstrap", icon: "layout-grid", category: "Frontend" },
-//   { id: 13, name: "Material UI", icon: "component", category: "Frontend" },
-//   { id: 14, name: "MongoDB", icon: "database", category: "Backend" },
-//   { id: 15, name: "MySQL", icon: "database", category: "Backend" },
-//   { id: 16, name: "PostgreSQL", icon: "server-cog", category: "Backend" },
-//   { id: 17, name: "Firebase", icon: "flame", category: "Cloud" },
-//   { id: 18, name: "Git", icon: "git-branch", category: "Tools" }
-// ];
-
 export const skillsData: Skill[] = [
-    { id: 1, name: "C/C++", icon: "devicon-cplusplus-plain", category: "Languages" },
-    { id: 2, name: "JavaScript", icon: "devicon-javascript-plain", category: "Languages" },
-    { id: 3, name: "Python", icon: "devicon-python-plain", category: "Languages" },
-    { id: 4, name: "Java", icon: "devicon-java-plain", category: "Languages" },
-    { id: 5, name: "SQL", icon: "devicon-mysql-plain", category: "Languages" },
-    { id: 6, name: "HTML/CSS", icon: "devicon-html5-plain", category: "Frontend" },
-    { id: 7, name: "ReactJS", icon: "devicon-react-original", category: "Frontend" },
-    { id: 8, name: "Redux", icon: "devicon-redux-original", category: "Frontend" },
-    { id: 9, name: "Node.js", icon: "devicon-nodejs-plain", category: "Backend" },
-    { id: 10, name: "Express.js", icon: "devicon-express-original", category: "Backend" },
-    { id: 11, name: "Tailwind CSS", icon: "devicon-tailwindcss-plain", category: "Frontend" },
-    { id: 12, name: "Bootstrap", icon: "devicon-bootstrap-plain", category: "Frontend" },
-    { id: 13, name: "Material UI", icon: "devicon-materialui-plain", category: "Frontend" },
-    { id: 14, name: "MongoDB", icon: "devicon-mongodb-plain", category: "Backend" },
-    { id: 15, name: "MySQL", icon: "devicon-mysql-plain", category: "Backend" },
-    { id: 16, name: "PostgreSQL", icon: "devicon-postgresql-plain", category: "Backend" },
-    { id: 17, name: "Firebase", icon: "devicon-firebase-plain", category: "Cloud" },
-    { id: 18, name: "Git", icon: "devicon-git-plain", category: "Tools" },
-    { id: 19, name: "FastAPI", icon: "devicon-fastapi-plain", category: "Backend" },
-    { id: 20, name: "Flask", icon: "devicon-flask-original", category: "Backend" },
+    { id: 1, name: "C/C++", icon: "", category: "Languages" },
+    { id: 2, name: "JavaScript", icon: "", category: "Languages" },
+    { id: 3, name: "Python", icon: "", category: "Languages" },
+    { id: 4, name: "Java", icon: "", category: "Languages" },
+    { id: 5, name: "SQL", icon: "", category: "Languages" },
+    { id: 6, name: "HTML/CSS", icon: "", category: "Frontend" },
+    { id: 7, name: "ReactJS", icon: "", category: "Frontend" },
+    { id: 8, name: "Redux", icon: "", category: "Frontend" },
+    { id: 11, name: "Tailwind CSS", icon: "", category: "Frontend" },
+    { id: 12, name: "Bootstrap", icon: "", category: "Frontend" },
+    { id: 13, name: "Material UI", icon: "", category: "Frontend" },
+    { id: 9, name: "Node.js", icon: "", category: "Backend" },
+    { id: 10, name: "Express.js", icon: "", category: "Backend" },
+    { id: 14, name: "MongoDB", icon: "", category: "Backend" },
+    { id: 15, name: "MySQL", icon: "", category: "Backend" },
+    { id: 16, name: "PostgreSQL", icon: "", category: "Backend" },
+    { id: 19, name: "FastAPI", icon: "", category: "Backend" },
+    { id: 20, name: "Flask", icon: "", category: "Backend" },
+    { id: 17, name: "Firebase", icon: "", category: "Cloud" },
+    { id: 21, name: "GitHub", icon: "", category: "Tools" },
+    { id: 18, name: "Git", icon: "", category: "Tools" },
 ];
 
 export const personalInfo = {
