@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
                             download="Neeraj_Resume.pdf"
                             className="inline-flex min-h-12 items-center justify-center rounded-lg border border-gray-300 px-5 text-sm font-semibold text-gray-800 transition-colors hover:border-gray-400 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-100 dark:hover:border-gray-600 dark:hover:bg-gray-900"
                         >
-                            Download résumé
+                            Download Resume
                         </a>
                         <a
                             href="#contact"

@@ -36,6 +36,22 @@ const Navbar: React.FC = () => {
 
     const closeMenu = () => setIsOpen(false);
 
+    const navigateToSection = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        const href = event.currentTarget.getAttribute("href");
+        const target = href ? document.querySelector<HTMLElement>(href) : null;
+        if (!target || !href) return;
+
+        event.preventDefault();
+        closeMenu();
+        window.history.pushState(null, "", href);
+        window.requestAnimationFrame(() => {
+            target.scrollIntoView({
+                behavior: shouldReduceMotion ? "instant" : "smooth",
+                block: "start",
+            });
+        });
+    };
+
     return (
         <header className="fixed inset-x-0 top-0 z-50">
             <nav
@@ -125,9 +141,9 @@ const Navbar: React.FC = () => {
                     {isOpen && (
                         <motion.div
                             id="mobile-navigation"
-                            initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
+                            initial={shouldReduceMotion ? false : { opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={shouldReduceMotion ? undefined : { opacity: 0 }}
                             transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
                             className="overflow-hidden border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 md:hidden"
                         >
@@ -136,7 +152,7 @@ const Navbar: React.FC = () => {
                                     <li key={link.href}>
                                         <a
                                             href={link.href}
-                                            onClick={closeMenu}
+                                            onClick={navigateToSection}
                                             className="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-accent-700 dark:text-gray-200 dark:hover:bg-gray-900 dark:hover:text-accent-300"
                                         >
                                             {link.name}
@@ -151,7 +167,7 @@ const Navbar: React.FC = () => {
                                         className="flex min-h-11 items-center justify-center gap-2 rounded-lg bg-accent-700 px-4 text-sm font-semibold text-white dark:bg-accent-500 dark:text-gray-950"
                                     >
                                         <Download aria-hidden="true" size={16} />
-                                        Download résumé
+                                        Download Resume
                                     </a>
                                 </li>
                             </ul>
